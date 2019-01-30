@@ -1,56 +1,32 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout} from '../store'
+import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap'
+import {LinkContainer} from 'react-router-bootstrap'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <h1>BOILERMAKER</h1>
-    <nav>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
-    </nav>
-    <hr />
-  </div>
+const NavBar = () => (
+  <Navbar inverse>
+    <Nav pullLeft>
+      <LinkContainer to="/">
+        <NavItem>Perpetual Pulse Palace</NavItem>
+      </LinkContainer>
+    </Nav>
+    <Nav pullRight>
+      <LinkContainer to="/MetronomeCalc">
+        <NavItem eventKey={1}>iTap</NavItem>
+      </LinkContainer>
+      <LinkContainer to="/DrumSynth">
+        <NavItem eventKey={2}>DrumSynth</NavItem>
+      </LinkContainer>
+      {/* <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
+        <MenuItem eventKey={3.1}>Action</MenuItem>
+        <MenuItem eventKey={3.2}>Another action</MenuItem>
+        <MenuItem eventKey={3.3}>Something else here</MenuItem>
+        <MenuItem divider />
+        <MenuItem eventKey={3.4}>Separated link</MenuItem>
+      </NavDropdown> */}
+    </Nav>
+  </Navbar>
 )
 
-/**
- * CONTAINER
- */
-const mapState = state => {
-  return {
-    isLoggedIn: !!state.user.id
-  }
-}
-
-const mapDispatch = dispatch => {
-  return {
-    handleClick() {
-      dispatch(logout())
-    }
-  }
-}
-
-export default connect(mapState, mapDispatch)(Navbar)
-
-/**
- * PROP TYPES
- */
-Navbar.propTypes = {
-  handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
-}
+export default NavBar
